@@ -1,6 +1,6 @@
-Проект автотестов на TypeScript с Cypress
+Проект автотестов на TypeScript с Cypress и Mocha Awesome
 Описание
-Этот проект содержит автоматизированные тесты на TypeScript с использованием фреймворка Cypress для тестирования веб-приложений.
+Этот проект содержит автоматизированные тесты на TypeScript с использованием фреймворка Cypress. Включает настройку для генерации подробных отчетов о выполнении тестов с помощью Mocha Awesome.
 
 Предварительные требования
 Node.js (версия 16 или выше)
@@ -19,10 +19,23 @@ cd autotests-typescript
 
 bash
 npm install
-Установите Cypress (если не установлен):
+Установите Cypress и Mocha Awesome (если не установлены):
 
 bash
-npm install cypress --save-dev
+npm install cypress mochawesome mochawesome-merge mochawesome-report-generator --save-dev
+Структура проекта
+text
+autotests-typescript/
+├── cypress/
+│   ├── e2e/                 # Директория с тестами
+│   │   └── *.spec.ts        # Файлы тестов (используется расширение .spec.ts)
+│   ├── fixtures/            # Фикстуры (тестовые данные)
+│   └── support/             # Поддерживающие файлы
+│       ├── commands.ts      # Пользовательские команды
+│       └── e2e.ts           # Поддержка e2e тестов
+├── cypress.config.ts        # Конфигурация Cypress
+├── tsconfig.json           # Конфигурация TypeScript
+└── package.json            # Зависимости и скрипты проекта
 Настройка
 Настройте базовый URL вашего приложения в файле cypress.config.ts:
 
@@ -30,6 +43,7 @@ typescript
 export default defineConfig({
   e2e: {
     baseUrl: 'http://localhost:3000', // замените на URL вашего приложения
+    specPattern: 'cypress/e2e/**/*.spec.ts', // путь к spec-файлам
     // ... остальные настройки
   },
 });
@@ -52,48 +66,34 @@ bash
 npm run cypress:run:chrome
 # или
 npm run cypress:run:firefox
+Запуск с генерацией отчетов Mocha Awesome
+bash
+# Запуск тестов с генерацией отчетов
+npm run test:report
+
+# Объединение отчетов (если нужно)
+npm run merge-reports
+
+# Генерация HTML отчета
+npm run generate-report
+
+# Полный процесс: запуск тестов + объединение + генерация отчета
+npm run test:full-report
 Запуск конкретного теста
 bash
 npx cypress run --spec "cypress/e2e/your-test.spec.ts"
-Структура проекта
-text
-autotests-typescript/
-├── cypress/
-│   ├── e2e/                 # Директория с тестами
-│   │   └── *.spec.ts        # Файлы тестов
-│   ├── fixtures/            # Фикстуры (тестовые данные)
-│   └── support/             # Поддерживающие файлы
-│       ├── commands.ts      # Пользовательские команды
-│       └── e2e.ts           # Поддержка e2e тестов
-├── cypress.config.ts        # Конфигурация Cypress
-├── tsconfig.json           # Конфигурация TypeScript
-└── package.json            # Зависимости и скрипты проекта
+Генерация отчетов
+Проект настроен для генерации отчетов с помощью Mocha Awesome. После запуска тестов с генерацией отчетов:
+
+Отчеты сохраняются в папку cypress/reports/
+
+JSON файлы содержат сырые данные о выполнении тестов
+
+HTML файлы содержат визуальное представление отчетов
+
+Для просмотра отчета откройте файл cypress/reports/report.html в браузере
+
 Написание тестов
 Создавайте новые тесты в директории cypress/e2e с расширением .spec.ts.
 
-Пример теста:
 
-typescript
-describe('Мой тестовый сценарий', (): void => {
-  it('должен выполнить определенное действие', (): void => {
-    cy.visit('/page');
-    cy.get('[data-testid="element"]').should('be.visible');
-  });
-});
-Полезные команды
-npm run build - Компиляция TypeScript кода
-
-npm run lint - Проверка кода с помощью ESLint
-
-npm run lint:fix - Автоматическое исправление ошибок линтера
-
-Решение проблем
-Если возникают проблемы с запуском тестов:
-
-Убедитесь, что все зависимости установлены:
-
-bash
-npm ci
-Проверьте совместимость версий Node.js и Cypress
-
-Убедитесь, что тестируемое приложение запущено и доступно по URL, указанному в конфигурации
