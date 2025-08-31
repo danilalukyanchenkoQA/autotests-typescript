@@ -1,0 +1,27 @@
+{
+  "name": "autotests-typescript",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run",
+    "cypress:run:chrome": "cypress run --browser chrome",
+    "cypress:run:firefox": "cypress run --browser firefox",
+    "build": "tsc",
+    "lint": "eslint cypress/**/*.ts",
+    "lint:fix": "eslint cypress/**/*.ts --fix"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@types/node": "^24.3.0",
+    "@typescript-eslint/eslint-plugin": "^8.41.0",
+    "@typescript-eslint/parser": "^8.41.0",
+    "cypress": "^15.0.0",
+    "eslint": "^9.34.0",
+    "eslint-plugin-cypress": "^5.1.1",
+    "typescript": "^5.9.2"
+  }
+}
