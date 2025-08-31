@@ -1,12 +1,12 @@
 
 describe('Страница авторизации', (): void => {
   it('Открытие страницы авторизации', (): void => {
-    cy.visit('http://localhost:3000/login');
+    cy.visit('/login'); 
     cy.contains('Welcome to Grafana').should('be.visible');
   });
 
   it('Проверка на введенный в строку текст', (): void => {
-    cy.visit('http://localhost:3000/login');
+    cy.visit('/login');
     cy.contains('Welcome to Grafana').should('be.visible');
     cy.get('input[name="user"]').type('your_username@example.com').should('have.value', 'your_username@example.com');
     cy.get('input[name="password"]').type('your_password')
